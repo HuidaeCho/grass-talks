@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- vim: set tabstop=4 expandtab shiftwidth=4: -->
 <html lang="en">
 
     <head>
@@ -8,7 +9,7 @@
         <title>State of GRASS GIS</title>
 
         <meta name="description" content="GRASS GIS talk slides at the FOSS4G 2023 in Prizren">
-        <meta name="author" content="Markus Neteler, Veronica Andreo, Vaclav Petras, Anna Petrasova">
+        <meta name="author" content="Huidae Cho, Markus Neteler, Veronica Andreo, Vaclav Petras, Anna Petrasova">
 
         <link rel="stylesheet" href="dist/reset.css">
         <link rel="stylesheet" href="dist/reveal.css">
@@ -134,16 +135,16 @@
       <div class="slides">
 
 <section>
-    <h1>State of GRASS&nbsp;GIS</h1>
+    <h1>State of GRASS&nbsp;GIS:<br>40 Years Strong and Counting</h1>
     <p style="margin-top: 0.5em">
-        <a href="https://geomatics.fsv.cvut.cz/en/employees/ing-martin-landa-ph-d/">Martin Landa</a>
+        <a href="https://hcho.isnew.info/">Huidae Cho</a>
         <br>
-        &amp; Markus Neteler, Verónica Andreo, Vaclav Petras, Anna Petrasova, Ondrej Pesek, Linda Karlovska
+        &amp; Martin Landa, Markus Neteler, Verónica Andreo, Vaclav Petras, Anna Petrasova, Ondrej Pesek, Linda Karlovska
     </p>
 
     <img src="img/grass_gis.svg" alt="GRASS GIS log" class="stretch">
-    <p><small>FOSS4G 2023 - Prizren, Kosovo</small></p>
-    <p><small><a href="https://ctu-geoforall-lab.github.io/grass-gis-talk-foss4g-2023/foss4g2023.html">ctu-geoforall-lab.github.io/grass-gis-talk-foss4g-2023/</a></small>
+    <p><small>FOSS4G Asia 2023 - Seoul, South Korea</small></p>
+    <p><small><a href="https://htmlpreview.github.io/?https://github.com/HuidaeCho/grass-gis-talk-foss4g-asia-2023/blob/main/foss4g-asia-2023.html">https://github.com/HuidaeCho/grass-gis-talk-foss4g-asia-2023/</a></small>
 </section>
 
 
@@ -151,16 +152,15 @@
     <h2>About the presenter...</h2>
     <br>
     <ul>
-        <li>Department of Geomatics, Faculty of Civil Engineering,<br/> Czech Technical University in Prague (CZ)</li>
-        <li>PhD in Geodesy and Cartography
-        <li>FOSS4G enthusiasts, a freelance programmer</li>
-        <li>Since 2003 active in the <a href="https://grass.osgeo.org/">GRASS GIS</a> project
-          <img src="img/landa_contribution.png" alt="Contribution to GRASS GIS" width="45%">
-        <img class="bio-img" src="img/landa.png" alt="Pic of Martin Landa">                 
+        <img class="bio-img" src="img/hcho.jpg" alt="Pic of Huidae Cho">
+        <li>Huidae Cho (/hidɛ t͡ɕo/, 조희대, 曺喜大)</li>
+        <li>Associate Professor, Department of Civil Engineering, New Mexico State University</li>
+        <li>Ph.D. in Civil Engineering, Texas A&amp;M University
+        <li>Water Resources Engineer, Senior GIS Developer</li>
+        <li>Since 2000, active in the <a href="https://grass.osgeo.org/">GRASS GIS</a> project
         </li>
     </ul>
-
-    <p align="right" style="font-size:18px"><a href="https://geomatics.fsv.cvut.cz/en/employees/ing-martin-landa-ph-d/">https://geomatics.fsv.cvut.cz/employees/landa</a></p>
+    <p align="right" style="font-size:18px"><a href="https://hcho.isnew.info//">https://hcho.isnew.info/</a></p>
 </section>
 
 
@@ -170,8 +170,10 @@
     <textarea data-template>
     ## Overview of this talk
         - What is GRASS GIS?
-        - Exciting new features in GRASS GIS 8.3
+        - Exciting new features in GRASS GIS 8.3+
         - Community contributions
+        - Mentoring program funded by NSF
+        - Student grants
         - Get involved
         - GRASS celebrated 40(!) in Prague
     </textarea>
@@ -284,8 +286,8 @@
     <h2>Roadmap</h2>
     <ul>
       <li>
-        <font color="grey">8.2.0, Jun 2022
-        <small>Presented on FOSS4G 2022.</small></font>
+        <b>8.2.0, Jun 2022</b>
+        <small>Presented on FOSS4G 2022.</small>
       </li>
       <li>
         8.2.1, Jan 2023
@@ -294,6 +296,10 @@
       <li>
         <b>8.3.0, Jun 2023</b>
         <small>Single window interface as the default.</small>
+      </li>
+      <li>
+        8.3.1, Oct 2023
+        <small>Important fixes and improvements.</small>
       </li>
       <ul>
         <li> major.minor.micro &ndash; semantic versioning:</small>
@@ -523,6 +529,72 @@
 </section>
 
 <section>
+  <h1>Internationalization</h1>
+  <i class="fa fa-language fa-4x"></i>
+  <p>Important for many non-English speaking GRASS users around the world!</p>
+  <img src="img/grass-welcome-ko.png" alt="GRASS GIS welcome in Korean" class="stretch">
+</section>
+
+<section>
+    <h2>Translated messages in numbers</h2>
+    <table style="display: inline-block;">
+        <tr><th>Language</th><th>Translated</th></tr>
+        <tr><td>Spanish</td><td>71%</td></tr>
+        <tr><td>Portuguese (Brazil)</td><td>50%</td></tr>
+        <tr><td>French</td><td>47%</td></tr>
+        <tr><td>Italian</td><td>42%</td></tr>
+        <tr><td>German</td><td>41%</td></tr>
+        <tr><td>Russian</td><td>35%</td></tr>
+        <tr><td>Czech</td><td>31%</td></tr>
+        <tr><td><b>Japanese</b></td><td><b>29%</b></td></tr>
+        <tr><td>Polish</td><td>28%</td></tr>
+        <tr><td>Romanian</td><td>19%</td></tr>
+        <tr><td>Turkish</td><td>14%</td></tr>
+        <tr><td><b>Korean</b></td><td><b>13%</b></td></tr>
+        <tr><td><b>Chinese (Simplified)</b></td><td><b>12%</b></td></tr>
+        <tr><td>Hungarian</td><td>12%</td></tr>
+    </table>
+    <table style="display: inline-block;">
+        <tr><th>Language</th><th>Translated</th></tr>
+        <tr><td>Latvian</td><td>11%</td></tr>
+        <tr><td>Portuguese</td><td>10%</td></tr>
+        <tr><td>Greek</td><td>6%</td></tr>
+        <tr><td><b>Thai</b></td><td><b>3%</b></td></tr>
+        <tr><td>Arabic</td><td>1%</td></tr>
+        <tr><td><b>Bengali</b></td><td><b>1%</b></td></tr>
+        <tr><td>Finnish</td><td>1%</td></tr>
+        <tr><td><b>Indonesian</b></td><td><b>1%</b></td></tr>
+        <tr><td><b>Malayalam</b></td><td><b>1%</b></td></tr>
+        <tr><td><b>Sinhala</b></td><td><b>1%</b></td></tr>
+        <tr><td>Slovenian</td><td>1%</td></tr>
+        <tr><td><b>Tamil</b></td><td><b>1%</b></td></tr>
+        <tr><td>Ukrainian</td><td>1%</td></tr>
+        <tr><td><b>Vietnamese</b></td><td><b>1%</b></td></tr>
+    </table>
+</section>
+
+<section>
+    <h2>Translated messages in numbers</h2>
+    <b>Asian languages 6%</b> vs. Non-Asian languages 23%
+    <p>We can do better!</p>
+    <p>How can you help?</p>
+</section>
+
+<section>
+    <h2>Migration to OSGeo Weblate</h2>
+    <a href="https://weblate.osgeo.org/projects/grass-gis/">https://weblate.osgeo.org/projects/grass-gis/</a>
+    <p><a href="https://lists.osgeo.org/pipermail/grass-user/2022-May/082962.html">May 2022 announcement</a></p>
+</section>
+
+<!-- too much for FOSS4G 2022-->
+<section>
+    <h2>Skeletons and Centerlines</h2>
+    <em>v.voronoi</em> tool can now create area skeletons and centerlines.
+    <img src="img/lake_skeleton_naip.png" alt="GRASS GIS and vector skeletonising" class="stretch">
+    <p>by Markus Metz
+</section>
+
+<section>
     <h1>More parallelization in GRASS 8.3</h1>
     <i class="fa fa-rocket fa-4x"></i>
 </section>
@@ -595,12 +667,16 @@
         <li>
             Addon tools:
             <small>
+            <b>r.flowaccumulation</b>,
             r.sun.daily, r.in.usgs,
             r.mapcalc.tiled, t.rast.what.aggr,
             r.connectivity.corridors, r.viewshed.exposure,
             and <b>14</b> more
-            <!-- 20 total -->
+            <!-- 21 total -->
             </small>
+            <ul>
+                <li><b>r.flowaccumulation</b>: Its Memory-Efficient Flow Accumulation (MEFA) algorithm was presented on Nov 30, 2023 at FOSS4G Asia 2023.</li>
+            </ul>
         </li>
         <li>
             Parallelizing custom Python scripts:
@@ -1606,7 +1682,7 @@ Libsvm is a popular library used in many machine learning programs (including sc
             autoSlideStoppable: true,
 
             // Enable slide navigation via mouse wheel
-            mouseWheel: false,
+            mouseWheel: true,
 
             // Hides the address bar on mobile devices
             hideAddressBar: true,
