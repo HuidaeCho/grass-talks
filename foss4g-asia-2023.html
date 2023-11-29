@@ -589,7 +589,7 @@
                 </ul>
         </div>
         <div class="col">
-            <img src="img/gsoc/rneighbors_openmp.png" alt="GRASS GIS and openMP" width="80%">
+            <img src="img/gsoc/rneighbors_openmp.png" alt="GRASS GIS and OpenMP" width="80%">
         </div>
     </div>
     <p>+ fixes in other parallel tools and benchmarks</p>
@@ -608,7 +608,7 @@
         <li>r.patch: mosaic multiple rasters into one</li>
     </ul>
     <p>
-        <img src="img/r_series_average_explanation.png" alt="GRASS GIS and r.series openMP benchmarking 2" style="height: 7ex">
+        <img src="img/r_series_average_explanation.png" alt="GRASS GIS and r.series OpenMP benchmarking 2" style="height: 7ex">
     </p>
     <p>by Aaron Saw Min Sern</p>
 </section>
@@ -623,10 +623,28 @@
         <li><code>memory</code> specifies RAM in MB</li>
         <li><em>Performance</em> section in documentation describes the behavior</li>
     </ul>
-    <img src="img/openmp_r_series_section.png" alt="GRASS GIS and r.series openMP benchmarking" class="stretch">
+    <img src="img/openmp_r_series_section.png" alt="GRASS GIS and r.series OpenMP benchmarking" class="stretch">
     <p>by Aaron Saw Min Sern and Anna Petrasova</p>
 </section>
 -->
+
+<section>
+    <h2>r.flowaccumulation: New addon for parallel flow accumulation</h2>
+    <ul>
+        <li>Based on Memory-Efficient Flow Accumulation (MEFA) (Cho, 2023)</li>
+        <li>Uses OpenMP for parallel flow accumulation calculation</li>
+    </ul>
+    <img src="img/r_flowaccumulation_benchmark.png" alt="r.flowaccumulation benchmark" class="stretch">
+    <p>
+    <small>
+        <span style="background-color:red; font-size:smaller;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> r.flowaccumulation
+        <span style="background-color:blue; font-size:smaller;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> High-Performance Flow Accumulation (Kotyra et al., 2021)
+        <span style="background-color:#00ff00; font-size:smaller;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> FastFlow (Zhou et al., 2019)
+        <span style="background-color:#ff00ff; font-size:smaller;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> TauDEM (Wallis et al., 2009)
+    </small>
+    </p>
+    <p>by Huidae Cho</p>
+</section>
 
 <section>
     <h2>More parallel tools</h2>
@@ -640,16 +658,12 @@
         <li>
             Addon tools:
             <small>
-            <b>r.flowaccumulation</b>,
             r.sun.daily, r.in.usgs,
             r.mapcalc.tiled, t.rast.what.aggr,
             r.connectivity.corridors, r.viewshed.exposure,
-            and <b>14</b> more
-            <!-- 21 total -->
+            and <b>13</b> more
+            <!-- 20 more total -->
             </small>
-            <ul>
-                <li><b>r.flowaccumulation</b>: Its Memory-Efficient Flow Accumulation (MEFA) algorithm was presented on Nov 30, 2023 at FOSS4G Asia 2023.</li>
-            </ul>
         </li>
         <li>
             Parallelizing custom Python scripts:
