@@ -1,0 +1,685 @@
+<!doctype html>
+<!-- vim: set tabstop=4 expandtab shiftwidth=4: -->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Evolution of GRASS GIS</title>
+
+        <meta name="description" content="GRASS GIS talk slides at the FOSS4G NA 2024 in St. Louis, MO">
+        <meta name="author" content="Huidae Cho">
+
+        <link rel="stylesheet" href="dist/reset.css">
+        <link rel="stylesheet" href="dist/reveal.css">
+        <link rel="stylesheet" href="css/theme/osgeo.css" id="theme">
+        <link rel="stylesheet" href="css/nouislider.min.css" id="slide">
+
+        <!-- Theme used for syntax highlighted code -->
+        <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+        <!-- For chalkboard plugin -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+        <script>
+            if( window.location.search.match( /print-pdf/gi ) ) {
+                var link = document.createElement( 'link' );
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = 'css/print/pdf.css';
+                document.getElementsByTagName( 'head' )[0].appendChild( link );
+            }
+        </script>
+
+<!--        <link href="https://fonts.googleapis.com/css?family=Miriam+Libre" rel="stylesheet">-->
+<style>
+/* miriam-libre-regular - latin */
+@font-face {
+  font-family: 'Miriam Libre';
+  font-style: normal;
+  font-weight: 400;
+  src: url('lib/font/miriam-libre/miriam-libre-v1-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Miriam Libre'), local('MiriamLibre-Regular'),
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-regular.svg#MiriamLibre') format('svg'); /* Legacy iOS */
+}
+
+/* miriam-libre-700 - latin */
+@font-face {
+  font-family: 'Miriam Libre';
+  font-style: normal;
+  font-weight: 700;
+  src: url('lib/font/miriam-libre/miriam-libre-v1-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Miriam Libre Bold'), local('MiriamLibre-Bold'),
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('lib/font/miriam-libre/miriam-libre-v1-latin-700.svg#MiriamLibre') format('svg'); /* Legacy iOS */
+}
+
+
+/* sintony-regular - latin */
+@font-face {
+  font-family: 'Sintony';
+  font-style: normal;
+  font-weight: 400;
+  src: url('lib/font/sintony/sintony-v4-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Sintony'),
+       url('lib/font/sintony/sintony-v4-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('lib/font/sintony/sintony-v4-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('lib/font/sintony/sintony-v4-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('lib/font/sintony/sintony-v4-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('lib/font/sintony/sintony-v4-latin-regular.svg#Sintony') format('svg'); /* Legacy iOS */
+}
+
+/* sintony-700 - latin */
+@font-face {
+  font-family: 'Sintony';
+  font-style: normal;
+  font-weight: 700;
+  src: url('lib/font/sintony/sintony-v4-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Sintony Bold'), local('Sintony-Bold'),
+       url('lib/font/sintony/sintony-v4-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('lib/font/sintony/sintony-v4-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('lib/font/sintony/sintony-v4-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('lib/font/sintony/sintony-v4-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('lib/font/sintony/sintony-v4-latin-700.svg#Sintony') format('svg'); /* Legacy iOS */
+}
+
+.reveal i.fa {
+    font-family:FontAwesome;
+    font-style: normal;
+}
+
+.reveal li > ul {
+    font-size: 85%;
+    line-height: 110%;
+  }
+
+.reveal small {
+  display: inline-block;
+  font-size: smaller;
+  line-height: 1.2em;
+  vertical-align: baseline;
+  margin: 0.1em; }
+
+.reveal small * {
+  vertical-align: baseline; }
+
+.reveal .credit {
+  font-size: small;
+  color: gray;
+  margin: 0.1em;
+}
+
+.reveal .right, .reveal .textimg > img, .reveal .textimg > video, .reveal .textimg > iframe, .reveal .imgtext > p, .reveal .imgtext > ul, .reveal .imgtext > ol, .reveal .imgtext > div {
+    float: right;
+    text-align: left;
+    max-width: 47%;
+}
+
+.reveal .left, .reveal .imgtext > img, .reveal .imgtext > video, .reveal .imgtext > iframe, .reveal .textimg > p, .reveal .textimg > ul, .reveal .textimg > ol, .reveal .textimg > div {
+    float: left;
+    text-align: left;
+    max-width: 47%;
+}
+</style>
+</head>
+
+<body>
+      <div class="reveal">
+      <div class="slides">
+
+<section>
+    <h1>Evolution of GRASS&nbsp;GIS</h1>
+    <p style="margin-top: 0.5em">
+        <a href="https://hcho.isnew.info/">Huidae Cho</a>
+    </p>
+
+    <img src="img/grass_logo_development.png" alt="GRASS GIS Logo Development" class="stretch">
+    <p><small>FOSS4G NA 2024 - St. Louis, MO</small></p>
+    <p><small><a href="https://htmlpreview.github.io/?https://github.com/HuidaeCho/grass-talks/blob/main/foss4g-na-2024.html">https://github.com/HuidaeCho/grass-talks/</a></small></p>
+    <img src="img/NSF_Official_logo_Med_Res_600ppi.png" alt="NSF Logo" style="width:200px;">
+    <p><small><a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2303651">NSF Award 2303651</a></small></p>
+</section>
+
+<section>
+    <h2>About the Presenter...</h2>
+    <br>
+    <ul>
+        <img class="bio-img" src="img/hcho.jpg" alt="Picture of Huidae Cho">
+        <li>Huidae Cho /hidɛ t͡ɕo/</li>
+        <li>Associate Professor, Department of Civil Engineering, New Mexico State University</li>
+        <li>Ph.D. in Civil Engineering, Texas A&amp;M University</li>
+        <li>Water Resources Engineer, Senior GIS Developer</li>
+        <li>Since 2000, active in the <a href="https://grass.osgeo.org/">GRASS GIS</a> project</li>
+    </ul>
+    <p align="right" style="font-size:18px"><a href="https://hcho.isnew.info//">https://hcho.isnew.info/</a></p>
+</section>
+
+<section data-markdown
+         data-background-image="https://grass.osgeo.org/images/logos/banner.jpg"
+         data-background-opacity="0.6">
+    <textarea data-template>
+    ## Overview of this Talk
+        - What Is GRASS GIS?
+        - Exciting new features in GRASS GIS 8.3+
+        - Internationalization
+        - Community contributions
+        - Get involved
+        - Student grants
+        - New mentoring program funded by NSF
+        - GRASS celebrated 40(!) in Prague
+    </textarea>
+</section>
+
+<section>
+    <h1>What Is GRASS GIS?</h1>
+    <div class="columns">
+        <div class="column" style="width:59%">
+            <ul>
+                <li><b>GRASS GIS</b> (Geographic Resources Analysis Support System), a FOSS suite used for geospatial data management and analysis, image processing, spatial modeling, and visualization.</li>
+                <li>Originally developed by the U.S. Army CERL for land management and environmental planning (1982-1995).</li>
+                <li>Founding member of OSGeo (2006)</li>
+                <li><a href="https://grass.osgeo.org/about/history/"><b>41 years</b> of continuous geospatial development</a></li>
+            </ul>
+        </div>
+        <div class="column" style="width:39%;text-align:center;padding-top:0.3em;">
+          <img src="img/grass41.png" alt="GRASS GIS 41st birthday" width="100%">
+        </div>
+    </div>
+</section>
+
+<section>
+    <h1>Brief History of Cross-Platform Support</h1>
+    <ul>
+        <img src="img/grass_fort_logo.png" alt="GRASS GIS Fort Logo" style="float:right; width:200px;">
+        <li>Born on July 29, 1983 (<a href="https://grasswiki.osgeo.org/wiki/GRASS_GIS_Birthday">the 1st user manual published</a>)
+            <ul>
+                <li>Adopted the <a href="https://oldgeni.isnew.info/grass/Jim-Westervelt.pdf">open-software</a> philosophy from the beginning</li>
+                <li>Initially supported UNIX only (X11 and Motif for XGRASS)</li>
+            </ul>
+        </li>
+        <li>TclTkGRASS added in <a href="https://grass.osgeo.org/news/1999_11_15_4_3release/">GRASS 4.3</a> in November 1999</li>
+        <img src="img/grass-Windows.jpg" alt="GRASS GIS Windows Logo" style="float:right; width:100px;">
+        <li>winGRASS (first Windows support through Cygwin) and Mac OS X support in <a href="https://grass.osgeo.org/news/2002_05_15_press_release500/">GRASS 5</a> in September 2002</li>
+        <img src="img/grass_gui.png" alt="GRASS GIS GUI" style="float:right; width:300px;">
+        <li>wxGUI and native support for Windows in <a href="https://grass.osgeo.org/news/2010_09_03_announce_grass640/">GRASS 6.4</a> in September 2010</li>
+    </ul>
+</section>
+
+<!--
+The GRASS GIS community was awarded a grant from the NSF Pathways to Enable Open-Source Ecosystem (POSE) program.
+This program is relatively new and will support the transition of GRASS GIS into
+* a sustainable scientific platform for the creation of new technological solutions to important national and societal problems.
+
+We are working together to
+* modernize its build system by migrating from the Autotools to CMake for better cross-platform compilations and
+* an easier integration into the Conda ecosystem,
+* create new standardized datasets,
+* provide workshops to its potential developers and users, and
+* support their activities.
+
+These collaborative efforts will bring the 40 years' evolution of GRASS GIS to
+* a wider audience of its potential contributors and users including
+* new generations of software developers,
+* geospatial scientists and researchers,
+* and students
+* for its sustainable growth into the future.
+
+As always, we welcome new contributors for development, documentation, and translation!
+
+
+    Dataset standardization
+
+    Native Windows support
+    * MSVC
+
+    Modern and cross-platform compilation support
+    * CMake
+
+    Easy-to-install Conda package
+    * Cross-platform Conda-build recipes
+
+    OpenMP parallelization
+    * Chung...
+
+    Standalone/Desktop GIS towards Geospatial Processing Engine
+    * QGIS Plugins
+    * Jupyter Notebook
+    * Python library
+    * R library
+-->
+
+<section>
+    <h1>Current Windows Support</h1>
+    <ul>
+        <li>Currently, uses <a href="https://www.mingw-w64.org/">MinGW-w64</a> for Windows support</li>
+        <li>Requires libraries from <a href="https://trac.osgeo.org/osgeo4w">OSGeo4W</a></li>
+        <li><a href="https://gis.stackexchange.com/a/416708/122552">Everything in OSGeo4W except GRASS</a> is built with <a href="https://docs.microsoft.com/en-us/cpp/">Microsoft Visual C++ (MSVC)</a></li>
+    </ul>
+</section>
+
+<section>
+    <h1>So What's Wrong?</h1>
+    <ul>
+        <li>Need two compilers:
+            <ul>
+                <li>MSVC for OSGeo4W dependencies</li>
+                <li>MinGW-w64 for GRASS</li>
+            </ul>
+        </li>
+        <li>Different C++ name mangling between MSVC and MinGW-w64
+            <ul>
+                <li>e.g., MinGW-w64 cannot link C++ objects with OSGeo4W GDAL built with MSVC.</li>
+            </ul>
+        </li>
+        <li>Less native...</li>
+        <li>We just want to use the native toolchain with MSVC!</li>
+    </ul>
+</section>
+
+<section>
+    <h1>MSVC Support</h1>
+    <ul>
+        <li><a href="https://github.com/rkanavath">Rashad Kanavath</a> created <a href="https://github.com/OSGeo/grass/pull/289">PR 289</a> for Visual C++ compiler support in January 2020.</li>
+        <li>Continuing as part of <a href="https://github.com/OSGeo/grass/pull/3621">PR 3621</a></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Current Build System</h1>
+    <ul>
+        <img src="img/Autoconf-automake-process.svg" style="float:right; height:500px;">
+        <li>Currently, uses the <a href="https://www.gnu.org/software/automake/manual/html_node/Autotools-Introduction.html">Autotools</a>.</li>
+        <li>Autotools was developed during the early 1990s.</li>
+        <li>Some people consider it <a href="https://stackoverflow.com/a/18291580/16079666">arcane</a> or even <a href="https://www.cs.cmu.edu/afs/club/user/cmccabe/blog-notes/autotools_considered_harmful2.html">harmful</a> (but not me ;-).</li>
+        <li>Autotools does NOT support Windows and needs a UNIX emulation layer such as MinGW-w64 or Cygwin.</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Modern and Cross-Platform Build System</h1>
+    <img src="img/2023/cmake_logo.svg" width="300px;">
+    <ul>
+        <li><a href="https://github.com/OSGeo/grass/pull/3621">PR 3621</a> now supports
+            <ul>
+                <li><a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/ubuntu_sys_cmake.rst">CMake on Ubuntu with system dependency libraries</a></li>
+                <li><a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/ubuntu_conda_cmake.rst">CMake on Ubuntu with Conda dependency libraries</a></li>
+                <li>CMake on macOS</li>
+            </ul>
+        </li>
+        <li>Ongoing effort: <a href="https://cmake.org/">CMake</a> with MSVC for native Windows build</li>
+        <li>Use MSVC from the free <a href="https://visualstudio.microsoft.com/vs/community/">Visual Studio Community Edition</a>.</li>
+        <li>13 contributors (* funded by NSF):
+            <a href="https://github.com/rkanavath">Rashad Kanavath</a>,
+            <a href="https://github.com/neteler">Markus Neteler</a>,
+            <a href="https://github.com/metzm">Markus Metz</a>, 
+            <a href="https://github.com/petrasovaa">Anna Petrasova</a>*,
+            <a href="https://github.com/landam">Martin Landa</a>,
+            <a href="https://github.com/hellik">Helmut Kudrnovsky</a>,
+            <a href="https://github.com/wenzeslaus">Vaclav Petras</a>*,
+            <a href="https://github.com/HuidaeCho">Huidae Cho</a>*,
+            <a href="https://github.com/nilason">Nicklas Larsson</a>,
+            <a href="https://github.com/echoix">Edouard Choinière</a>,
+            <a href="https://github.com/lbartoletti">Loïc Bartoletti</a>,
+            <a href="https://github.com/aaronsms">Aaron Saw</a>,
+            <a href="https://github.com/Mahesh1998">Mahesh Maddineni</a>*
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h1>Conda Environment</h1>
+    <ul>
+        <img src="img/Conda_logo.svg" alt="Conda Logo" class="stretch" style="float:right;">
+        <li><a href="https://github.com/nilason">Nicklas Larsson</a> created <a href="https://github.com/nilason/grass-conda">a script package</a> for building GRASS GIS with Anaconda for macOS.
+        <li>Funded by NSF, we're currently working to
+            <ul>
+                <li>Use CMake and dependency libraries from Conda for Linux and Windows.</li>
+                <li>Create a GRASS GIS Conda package for Linux, macOS, and Windows.</li>
+            </ul>
+        </li>
+        <li>This effort relies on the MSVS support for Windows!</li>
+    </ul>
+    <img src="img/grass-Linux.png" alt="GRASS GIS Linux Logo" style="width:100px;">
+    <img src="img/grass-Mac.png" alt="GRASS GIS macOS Logo" style="width:100px;">
+    <img src="img/grass-Windows.jpg" alt="GRASS GIS Windows Logo" style="width:100px;">
+</section>
+
+<section>
+    <h1>Dataset Standardization</h1>
+    <ul>
+        <li>NCSU, ASU, and NMSU teams created standardized datasets for regional areas.</li>
+        <li>These datasets
+            <ul>
+                <li>Are based on the Basic North Carolina Dataset v0.8 from May 2008.</li>
+                <li>Help create localized tutorials.</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h1>GRASS GIS as a Geospatial Processing Engine</h1>
+    <ul>
+        <li>GRASS GIS has its own GUI for desktop use.</li>
+        <li>It also provides powerful features as a geospatial processing engine:
+            <ul>
+                <li>Scalable parallel computing</li>
+                <li>Integration with other systems for efficient geospatial computing</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Parallel Computing</h2>
+    <img src="img/openmp_r_mfilter.png" class="stretch">
+    <ul>
+        <!-- find \( -name "*.c" -or -name "*.cpp" -or -name "*.py" \) -exec grep -H 'M_NPROCS\|key.*nprocs\|pragma *omp\|keyword.*parallel' {} \; | sed 's#./[^/]*/##; s#/[^/]*\.[a-z]*:.*$##; s#^.*/##; /\./!d; /g.parser\|[A-Z]/d' | sort -u -->
+        <li>75 modules support parallel computing.
+            <ul>
+                <li>34 core modules:
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.horizon.html">r.horizon</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.mfilter.html">r.mfilter</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.neighbors.html">r.neighbors</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.patch.html">r.patch</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.proj.html">r.proj</a>, ...
+                    <!--
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.resamp.filter.html">r.resamp.filter</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.resamp.interp.html">r.resamp.interp</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.series.html">r.series</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.series.accumulate.html">r.series.accumulate</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.sim.sediment.html">r.sim.sediment</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.sim.water.html">r.sim.water</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.slope.aspect.html">r.slope.aspect</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.sun.html">r.sun</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.texture.html">r.texture</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r.univar.html">r.univar</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/r3.gradient.html">r3.gradient</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.aggregate.html">t.rast.aggregate</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.aggregate.ds.html">t.rast.aggregate.ds</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.algebra.html">t.rast.algebra</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.contour.html">t.rast.contour</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.extract.html">t.rast.extract</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.gapfill.html">t.rast.gapfill</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.mapcalc.html">t.rast.mapcalc</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.neighbors.html">t.rast.neighbors</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.series.html">t.rast.series</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.to.vect.html">t.rast.to.vect</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.univar.html">t.rast.univar</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast.what.html">t.rast.what</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast3d.algebra.html">t.rast3d.algebra</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast3d.extract.html">t.rast3d.extract</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast3d.mapcalc.html">t.rast3d.mapcalc</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.rast3d.univar.html">t.rast3d.univar</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/t.vect.extract.html">t.vect.extract</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/v.surf.rst.html">v.surf.rst</a>
+                    -->
+                </li>
+                <li>41 addons:
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/i.histo.match.html">i.histo.match</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/i.segment.hierarchical.html">i.segment.hierarchical</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/i.segment.stats.html">i.segment.stats</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/i.segment.uspo.html">i.segment.uspo</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.parallel.download.html">i.sentinel.parallel.download</a>, ...
+                    <!--
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/i.spec.sam.html">i.spec.sam</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/m.crawl.thredds.html">m.crawl.thredds</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.area.createweight.html">r.area.createweight</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.flowaccumulation.html">r.flowaccumulation</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.futures.calib.html">r.futures.calib</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.futures.devpressure.html">r.futures.devpressure</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.futures.gridvalidation.html">r.futures.gridvalidation</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.futures.parallelpga.html">r.futures.parallelpga</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.futures.potential.html">r.futures.potential</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.gdd.html">r.gdd</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.in.usgs.html">r.in.usgs</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.learn.ml.html">r.learn.ml</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.learn.train.html">r.learn.train</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.mapcalc.tiled.html">r.mapcalc.tiled</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.massmov.html">r.massmov</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.maxent.lambdas.html">r.maxent.lambdas</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.maxent.train.html">r.maxent.train</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.pops.spread.html">r.pops.spread</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.random.walk.html">r.random.walk</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.series.diversity.html">r.series.diversity</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.shaded.pca.html">r.shaded.pca</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.sim.terrain.html">r.sim.terrain</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.sim.water.mp.html">r.sim.water.mp</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.sun.daily.html">r.sun.daily</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.sun.hourly.html">r.sun.hourly</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.sun.mp.html">r.sun.mp</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.survey.html">r.survey</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.tri.html">r.tri</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.vector.ruggedness.html">r.vector.ruggedness</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/r.viewshed.exposure.html">r.viewshed.exposure</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/t.rast.import.netcdf.html">t.rast.import.netcdf</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/t.rast.line.html">t.rast.line</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/t.rast.null.html">t.rast.null</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/t.rast.what.aggr.html">t.rast.what.aggr</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/t.stac.item.html">t.stac.item</a>,
+                    <a href="https://grass.osgeo.org/grass-stable/manuals/addons/v.stats.html">v.stats</a>
+                    -->
+                </li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Parallelizing Custom Python Scripts</h2>
+    <ul>
+        <li>Data parallelization: GridModule</li>
+        <li>Task parallelization: multiprocessing, ParallelModuleQueue</li>
+    </ul>
+    <img src="img/parallel_tools.png" alt="Data and task based parallelization" class="stretch">
+</section>
+
+<section>
+    <h2>Jupyter Notebooks Integration</h2>
+    <img src="img/jupyter_timeseries_viewshed.gif" alt="GRASS GIS and viewshed time series"  width="40%">
+    <img src="img/jupyter_interactive_viewshed.png" alt="GRASS GIS and viewshed" width="33%">
+    <ul>
+        <li><a href="https://grass.osgeo.org/grass-stable/manuals/libpython/grass.jupyter.html">grass.jupyter</a>: Python library for easy and interactive visualization in Jupyter Notebooks</li>
+        <li>New <em>SeriesMap</em> for animated raster/vector series in <a href="https://github.com/OSGeo/grass/pull/3036">PR 3036</a></li>
+        <li><a href="https://github.com/ncsu-geoforall-lab/grass-gis-workshop-foss4gna-2023">FOSS4G NA 2023 workshop</a></li>
+    </ul>
+    <p>By
+    <a href="https://github.com/chaedri">Caitlin Haedrich</a>,
+    <a href="https://github.com/wenzeslaus">Vaclav Petras</a>,
+    <a href="https://github.com/petrasovaa">Anna Petrasova</a>
+    </p>
+</section>
+
+<section>
+    <h2>R Integration</h2>
+    <ul>
+        <li><a href="https://github.com/rsbivand/rgrass/">R-GRASS</a>: Interface between GRASS GIS and R</li>
+        <li><a href="https://rsbivand.github.io/foss4g_2022/modernizing_220822.html">R-GRASS workshop</a></li>
+    </ul>
+    <p>By
+    <a href="https://github.com/rsbivand">Roger Bivand</a>,
+    Rainer Krug,
+    <a href="https://github.com/Robinlovelace">Robin Lovelace</a>,
+    <a href="https://github.com/neteler">Markus Neteler</a>,
+    Sebastian Jeworutzki,
+    <a href="https://github.com/florisvdh">Floris Vanderhaeghe</a>
+    </p>
+</section>
+
+<section>
+    <h2>QGIS Integration</h2>
+    <ul>
+        <li><a href="https://docs.qgis.org/3.34/en/docs/user_manual/grass_integration/grass_integration.html">GRASS GIS integration with QGIS</a>:
+            <ul>
+                <li>GRASS GIS provider: Allows QGIS users to run GRASS modules on non-GRASS data</li>
+                <li>GRASS 8: Allows QGIS users to manage GRASS mapsets and run GRASS modules on them</li>
+            </ul></li>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Scientific Foundations</h2>
+    <ul>
+        <li>References to related scientific papers since its inception</li>
+        <li>References to papers associated with tools or libraries</li>
+        <li>Tools used in open science</li>
+    </ul>
+    <img src="img/module_references.png" alt="GRASS GIS and module references" class="stretch">
+    <p>See: <a href="https://scholar.google.com/citations?user=gJ0ZB0cAAAAJ">GRASS GIS profile at Google scholar</a></p>
+</section>
+
+<section>
+    <h1>Your Contributions Are Welcome!</h1>
+    <ul>
+        <li><em>"Fork me on <a href="https://github.com/OSGeo/grass">GitHub</a>"</em> and suggest changes or fix bugs via pull requests</li>
+        <li>Join GitHub <a href="https://github.com/OSGeo/grass/discussions">Discussions</a></li>
+        <li>Create your own addon! See this nice workshop for a guideline:
+            <a href="https://github.com/wenzeslaus/python-grass-addon">How to write a Python tool for GRASS</a>
+        </li>
+        <li>Translatie GRASS: We use <a href="https://weblate.osgeo.org/projects/grass-gis/">OSGeo Weblate</a></li>
+    </ul>
+    <img src="img/octocat.png" alt="GitHub logo" class="stretch">
+</section>
+
+<section>
+    <h1>Thanks for Your Attention!!</h1>
+    <img src="img/grass_gis.svg" alt="GRASS GIS logo" width="20%">
+    <p><a href="https://grass.osgeo.org/">grass.osgeo.org</a></p>
+    <p><small><a href="https://htmlpreview.github.io/?https://github.com/HuidaeCho/grass-talks/blob/main/foss4g-na-2024.html">https://github.com/HuidaeCho/grass-talks/</a></small></p>
+    <a href="https://twitter.com/grassgis"><i class="fa fa-twitter"></i> GRASS GIS</a>
+</section>
+        </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/math/math.js"></script>
+    <script src="plugin/chalkboard/plugin.js"></script>
+    <script>
+
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            hash: true,
+            // Display controls in the bottom right corner
+            controls: true,
+
+            // Display a presentation progress bar
+            progress: true,
+
+            center: true,
+
+            // Display the page number of the current slide
+            slideNumber: true,
+
+            // Enable the slide overview mode
+            overview: true,
+
+            // Turns fragments on and off globally
+            fragments: true,
+
+            // The "normal" size of the presentation, aspect ratio will be preserved
+            // when the presentation is scaled to fit different resolutions. Can be
+            // specified using percentage units.
+            // width: 960,
+            // height: 700,
+
+            // Factor of the display size that should remain empty around the content
+            margin: 0.05,  // increase?
+
+            // Bounds for smallest/largest possible scale to apply to content
+            minScale: 0.5,
+            maxScale: 5.0,
+
+            // Push each slide change to the browser history
+            history: true,
+            // Enable keyboard shortcuts for navigation
+            keyboard: true,
+
+            // Vertical centering of slides
+            center: true,
+
+            // Enables touch navigation on devices with touch input
+            touch: true,
+
+            // Loop the presentation
+            loop: false,
+            // Flags if the presentation is running in an embedded mode,
+            // i.e. contained within a limited portion of the screen
+            embedded: false,
+
+            // Number of milliseconds between automatically proceeding to the
+            // next slide, disabled when set to 0, this value can be overwritten
+            // by using a data-autoslide attribute on your slides
+            autoSlide: 0,
+
+            // Stop auto-sliding after user input
+            autoSlideStoppable: true,
+
+            // Enable slide navigation via mouse wheel
+            mouseWheel: true,
+
+            // Hides the address bar on mobile devices
+            hideAddressBar: true,
+
+            // Opens links in an iframe preview overlay
+            previewLinks: false,
+
+            // Slide transition
+            transition: 'slide', // default/none/slide/concave/convex/zoom
+
+            // Transition speed
+            transitionSpeed: 'default', // default/fast/slow
+
+            // Transition style for full page slide backgrounds
+            backgroundTransition: 'none', // default/none/slide/concave/convex/zoom
+
+            // Number of slides away from the current that are visible
+            viewDistance: 3,
+
+            // Parallax background image
+            //parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+            // Parallax background size
+            //parallaxBackgroundSize: '' // CSS syntax, e.g. "2100px 900px"
+
+            chalkboard: {
+                boardmarkerWidth: 3,
+                chalkWidth: 7,
+                chalkEffect: 1.0,
+                src: null,
+                readOnly: undefined,
+                toggleChalkboardButton: true,
+                toggleNotesButton: true,
+                boardmarkers : [
+                    { color: 'rgba(220,20,60,1)', cursor: 'url(' + path + 'img/boardmarker-red.png), auto'},
+                    { color: 'rgba(255,140,0,1)', cursor: 'url(' + path + 'img/boardmarker-orange.png), auto'},
+                ]
+            },
+
+            math: {
+                mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+                config: 'TeX-AMS_HTML-full',
+                // pass other options into `MathJax.Hub.Config()`
+                TeX: { Macros: { RR: "{\\bf R}" } }
+            },
+
+            plugins: [
+                RevealMath,
+                RevealHighlight,
+                RevealMarkdown,
+                RevealChalkboard
+            ]
+        });
+    </script>
+</body>
+</html>
