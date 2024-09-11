@@ -147,7 +147,7 @@
 </section>
 
 <section>
-    <h2>About the Presenter...</h2>
+    <h1>About the Presenter...</h2>
     <br>
     <ul>
         <img class="bio-img" src="img/hcho.jpg" alt="Picture of Huidae Cho">
@@ -155,40 +155,27 @@
         <li>Associate Professor, Department of Civil Engineering, New Mexico State University</li>
         <li>Ph.D. in Civil Engineering, Texas A&amp;M University</li>
         <li>Water Resources Engineer, Senior GIS Developer</li>
-        <li>Since 2000, active in the <a href="https://grass.osgeo.org/">GRASS GIS</a> project</li>
+	<li>16 years of ArcGIS development in C# and ongoing...</li>
+        <li>A core developer of <a href="https://grass.osgeo.org/">GRASS GIS</a> since 2000</li>
+	<li>A Project Steering Committee (PSC) member of GRASS GIS since 2021</li>
     </ul>
     <p align="right" style="font-size:18px"><a href="https://hcho.isnew.info//">https://hcho.isnew.info/</a></p>
-</section>
-
-<section data-markdown
-         data-background-image="https://grass.osgeo.org/images/logos/banner.jpg"
-         data-background-opacity="0.6">
-    <textarea data-template>
-    ## Overview of this Talk
-        - What Is GRASS GIS?
-        - Exciting new features in GRASS GIS 8.3+
-        - Internationalization
-        - Community contributions
-        - Get involved
-        - Student grants
-        - New mentoring program funded by NSF
-        - GRASS celebrated 40(!) in Prague
-    </textarea>
 </section>
 
 <section>
     <h1>What Is GRASS GIS?</h1>
     <div class="columns">
-        <div class="column" style="width:59%">
+        <div class="column" style="width:70%">
             <ul>
-                <li><b>GRASS GIS</b> (Geographic Resources Analysis Support System), a FOSS suite used for geospatial data management and analysis, image processing, spatial modeling, and visualization.</li>
+                <li><b>GRASS</b> (Geographic Resources Analysis Support System) is a GPL 2+ GIS.</li>
                 <li>Originally developed by the U.S. Army CERL for land management and environmental planning (1982-1995).</li>
                 <li>Founding member of OSGeo (2006)</li>
+    		<img src="img/grass41.png" alt="GRASS GIS 41st birthday" width="250px" style="float:right;">
                 <li><a href="https://grass.osgeo.org/about/history/"><b>41 years</b> of continuous geospatial development</a></li>
             </ul>
         </div>
-        <div class="column" style="width:39%;text-align:center;padding-top:0.3em;">
-          <img src="img/grass41.png" alt="GRASS GIS 41st birthday" width="100%">
+        <div class="column" style="width:29%;text-align:center;padding-top:0.3em;">
+          <img src="img/grass_Bob_Lozar_video.png" alt="GRASS GIS Bob Lozar" width="75%">
         </div>
     </div>
 </section>
@@ -307,9 +294,10 @@ As always, we welcome new contributors for development, documentation, and trans
     <ul>
         <li><a href="https://github.com/OSGeo/grass/pull/3621">PR 3621</a> now supports
             <ul>
-                <li><a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/ubuntu_sys_cmake.rst">CMake on Ubuntu with system dependency libraries</a></li>
-                <li><a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/ubuntu_conda_cmake.rst">CMake on Ubuntu with Conda dependency libraries</a></li>
-                <li>CMake on macOS</li>
+                <li><a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/slackware_sys_cmake.rst">CMake on Slackware</a></li>
+                <li><a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/ubuntu_sys_cmake.rst">CMake on Ubuntu</a>, <a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/ubuntu_conda_cmake.rst">with Conda</a></li>
+		<li><a href="https://github.com/nilason/grass-conda">CMake on macOS with Conda</a></li>
+		<li><a href="https://github.com/Mahesh1998/grass-docs/blob/main/cmake_build_docs/windows_conda_cmake.rst">CMake on Windows with Conda</a></li>
             </ul>
         </li>
         <li>Ongoing effort: <a href="https://cmake.org/">CMake</a> with MSVC for native Windows build</li>
@@ -333,17 +321,17 @@ As always, we welcome new contributors for development, documentation, and trans
 </section>
 
 <section>
-    <h1>Conda Environment</h1>
+    <h1>GRASS GIS Conda Package</h1>
     <ul>
         <img src="img/Conda_logo.svg" alt="Conda Logo" class="stretch" style="float:right;">
-        <li><a href="https://github.com/nilason">Nicklas Larsson</a> created <a href="https://github.com/nilason/grass-conda">a script package</a> for building GRASS GIS with Anaconda for macOS.
         <li>Funded by NSF, we're currently working to
             <ul>
                 <li>Use CMake and dependency libraries from Conda for Linux and Windows.</li>
                 <li>Create a GRASS GIS Conda package for Linux, macOS, and Windows.</li>
             </ul>
         </li>
-        <li>This effort relies on the MSVS support for Windows!</li>
+        <li>Relies on the MSVS support for Windows!</li>
+	<li>Will allow for an easier deployment of GRASS GIS for Windows and High-Performance Computing (HPC) users.</li>
     </ul>
     <img src="img/grass-Linux.png" alt="GRASS GIS Linux Logo" style="width:100px;">
     <img src="img/grass-Mac.png" alt="GRASS GIS macOS Logo" style="width:100px;">
@@ -516,45 +504,44 @@ As always, we welcome new contributors for development, documentation, and trans
 <section>
     <h2>QGIS Integration</h2>
     <ul>
-        <li><a href="https://docs.qgis.org/3.34/en/docs/user_manual/grass_integration/grass_integration.html">GRASS GIS integration with QGIS</a>:
-            <ul>
-                <li>GRASS GIS provider: Allows QGIS users to run GRASS modules on non-GRASS data</li>
-                <li>GRASS 8: Allows QGIS users to manage GRASS mapsets and run GRASS modules on them</li>
-            </ul></li>
-        </li>
+	    <li><a href="https://docs.qgis.org/3.34/en/docs/user_manual/grass_integration/grass_integration.html">GRASS GIS integration with QGIS</a></li>
+	<li>GRASS GIS provider: Allows QGIS users to run GRASS modules on non-GRASS data</li>
+	<li>GRASS 8: Allows QGIS users to manage GRASS mapsets and run GRASS modules on them</li>
     </ul>
 </section>
 
 <section>
-    <h2>Scientific Foundations</h2>
+    <h2>Enables Scientists</h2>
     <ul>
+        <li>Scientifically peer-reviewed algorithms for open science</li>
         <li>References to related scientific papers since its inception</li>
         <li>References to papers associated with tools or libraries</li>
-        <li>Tools used in open science</li>
     </ul>
     <img src="img/module_references.png" alt="GRASS GIS and module references" class="stretch">
-    <p>See: <a href="https://scholar.google.com/citations?user=gJ0ZB0cAAAAJ">GRASS GIS profile at Google scholar</a></p>
+    <p>See <a href="https://scholar.google.com/citations?user=gJ0ZB0cAAAAJ">the GRASS GIS profile at Google Scholar</a></p>
 </section>
 
 <section>
     <h1>Your Contributions Are Welcome!</h1>
     <ul>
-        <li><em>"Fork me on <a href="https://github.com/OSGeo/grass">GitHub</a>"</em> and suggest changes or fix bugs via pull requests</li>
         <li>Join GitHub <a href="https://github.com/OSGeo/grass/discussions">Discussions</a></li>
+	<li>Suggest changes or report issues on <a href="https://github.com/OSGeo/grass">GitHub</a></li>
+	<li>Fix bugs via <a href="https://github.com/OSGeo/grass">GitHub</a> pull requests</li>
         <li>Create your own addon! See this nice workshop for a guideline:
             <a href="https://github.com/wenzeslaus/python-grass-addon">How to write a Python tool for GRASS</a>
         </li>
-        <li>Translatie GRASS: We use <a href="https://weblate.osgeo.org/projects/grass-gis/">OSGeo Weblate</a></li>
+        <li>Translate GRASS: We use <a href="https://weblate.osgeo.org/projects/grass-gis/">OSGeo Weblate</a></li>
     </ul>
     <img src="img/octocat.png" alt="GitHub logo" class="stretch">
 </section>
 
 <section>
     <h1>Thanks for Your Attention!!</h1>
-    <img src="img/grass_gis.svg" alt="GRASS GIS logo" width="20%">
+    <img src="img/grass_gis.svg" alt="GRASS GIS logo" width="20%" style="vertical-align:middle;">
+    <img src="img/NSF_Official_logo_Med_Res_600ppi.png" alt="NSF Logo" style="width:200px; vertical-align:middle;">
     <p><a href="https://grass.osgeo.org/">grass.osgeo.org</a></p>
-    <p><small><a href="https://htmlpreview.github.io/?https://github.com/HuidaeCho/grass-talks/blob/main/foss4g-na-2024.html">https://github.com/HuidaeCho/grass-talks/</a></small></p>
-    <a href="https://twitter.com/grassgis"><i class="fa fa-twitter"></i> GRASS GIS</a>
+    <p><a href="https://twitter.com/grassgis"><i class="fa fa-twitter"></i> GRASS GIS</a></p>
+    <p><small><a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2303651">NSF Award 2303651</a></small></p>
 </section>
         </div>
     </div>
